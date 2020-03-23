@@ -13,16 +13,16 @@ module FormsLab
       erb :'pirates/new'
     end
 
-    post '/pirates' do
-      @pirate = Pirate.new(params[:pirate])
+    post '/teams' do
+      @team = Team.new(name: params[:team][:name], motto: params[:team][:motto])
+      members = params[:team][:members]
 
-      params[:pirate][:ships].each do |details|
-        Ship.new(details)
+      members.each do |member_params|
+        SuperHero.new({name: member_params[:name], power: member_params[:power], bio: member_params[:bio]})
       end
+      @super_heroes = SuperHero.all
 
-      @ships = Ship.all
-
-      erb :'pirates/show'
+      erb :team
     end
 
   end
